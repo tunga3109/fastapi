@@ -1,6 +1,12 @@
-import requests
+users = [
+    {'id': 1,
+    'name': 'Tunga',
+    'surname': 'Chan',
+    'age': '24'}
+]
 
-r = requests.get('http://127.0.0.1:8000/',
-headers={'content-length': "19" })
+def us(user_id: int):
+    cur_user = list(filter(lambda user: user.get('id') == user_id, users))[0]
+    print(cur_user['name'])
 
-print(r.text)
+us(1)
