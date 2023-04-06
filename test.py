@@ -1,12 +1,8 @@
-users = [
-    {'id': 1,
-    'name': 'Tunga',
-    'surname': 'Chan',
-    'age': '24'}
-]
+from fastapi import FastAPI, Response, Path
+from fastapi.responses import FileResponse
 
-def us(user_id: int):
-    cur_user = list(filter(lambda user: user.get('id') == user_id, users))[0]
-    print(cur_user['name'])
+app = FastAPI()
 
-us(1)
+@app.get('/file', response_class=FileResponse)
+def read_root():
+    return 'index.html'
