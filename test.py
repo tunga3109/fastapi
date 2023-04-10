@@ -20,4 +20,3 @@ users = [
 def add_user(user: List[Trade]):
     users.extend(user)
     return {'data': users}
-
