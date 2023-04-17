@@ -1,22 +1,25 @@
-from typing import List
-from fastapi import FastAPI, Response, Body
-from fastapi.responses import FileResponse, RedirectResponse
-from pydantic.fields import Field
-from pydantic.main import BaseModel
+from fastapi import FastAPI
+from typing import List, Optional
+from pydantic import BaseModel
+
+class Item(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+    tags: List[str] = []
+
 
 app = FastAPI()
 
+items = []
 
-class Trade(BaseModel):
-    name: str 
-    surname: str
-    age: int = Field(gt=18, lt=100, title='Age')
-    
-users = [
-    {'name': 'Anton', 'Surname': 'Zyanouchik', 'age': 25},
-    ]
+@app.post("/items/")
+async def create_item(item: Item):
+    items.append(item)
+    return item
 
-@app.post('/users')
-def add_user(user: List[Trade]):
-    users.extend(user)
-    return {'data': users}
+@app.get("/items/")
+async def read_items():
+    return items
+
