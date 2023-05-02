@@ -1,18 +1,14 @@
 from fastapi import FastAPI
 import psycopg2
 
+from config import DB_USER, DB_HOST, DB_NAME, DB_PASS, DB_PORT
+
 app = FastAPI(
     title='Trading App'
 )
 
-DB_NAME = "tg_bot"
-DB_USER = "postgres"
-DB_PASSWORD = "xuxin1999"
-DB_HOST = "localhost"
-DB_PORT = 5432
 
-
-conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT)
+conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)
 
 cur = conn.cursor()
 cur.execute('select * from users')
