@@ -1,35 +1,43 @@
+from typing import List
 from fastapi import FastAPI
-import psycopg2
+from pydantic import BaseModel, Field
+from capitalcom.client_demo import *
 
-from config import DB_USER, DB_HOST, DB_NAME, DB_PASS, DB_PORT
+from config import *
+
+cl = Client(login, password, API_KEY)
 
 app = FastAPI(
     title='Trading App'
 )
 
+fake_trades = []
 
-conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)
+users = [
+    {'id': 1, 'name': 'Anton', 'age':  24},
+    {'id': 2, 'name': 'Tunga', 'age':  24},
+    {'id': 3, 'name': 'Pavel', 'age':  25},
+    {'id': 4, 'name': 'Sergei', 'age': 37},
+]
 
-cur = conn.cursor()
-cur.execute('select * from users')
+class Trade(BaseModel):
+    id: int
+    user_id: int
+    currency: str = Field(max_length=5)
+    side: str
+    price: float = Field(ge=0)
+    amount: float
 
-rows = cur.fetchall()
-columns = [desc[0] for desc in cur.description]
-print(columns)
+class User(BaseModel):
+    id: int
+    name: str
+    age: int
 
-
-# Convert each row to a dictionary and append to a list
-users = []
-for row in rows:
-    row_dict = {}
-    for i in range(len(columns)):
-        row_dict[columns[i]] = row[i]
-    users.append(row_dict)
-
-# Close the cursor and connection
-cur.close()
-conn.close()
-
-@app.get('/users/{user_id}') # Точка входа
+@app.get('/user/{user_id}', response_model=List[User])
 def get_user(user_id: int):
-    return [user for user in users if user['id'] == user_id]
+    return [user for user in users if user.get('id') == user_id]
+
+@app.post('/trades')
+def add_trades(trades: List[Trade]):
+    fake_trades.extend(trades)
+    return {'status code': 200, 'data': fake_trades}, 
