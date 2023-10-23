@@ -1,15 +1,6 @@
-from fastapi import FastAPI, Body
-from fastapi.responses import FileResponse
- 
-app = FastAPI()
- 
-@app.get("/")
-def root():
-    return FileResponse("public/index.html")
- 
-@app.post("/hello")
-#def hello(name = Body(embed=True)):
-def hello(data = Body()):
-    name = data["name"]
-    age = data["age"]
-    return {"message": f"{name}, ваш возраст - {age}"}
+fake_trades = [
+    {"id": 1, "user_id": 1, "currency": "USD", "side": "buy", "price": 123, "amount": 2.12},
+    {"id": 2, "user_id": 2, "currency": "USD", "side": "sell", "price": 125, "amount": 2.12}
+]
+
+print(fake_trades[1:][:1])
