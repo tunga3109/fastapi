@@ -8,12 +8,9 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import ValidationError
 from fastapi.responses import JSONResponse
 
-
-
 app = FastAPI(
     title='Trading App'
 )
-
 
 @app.exception_handler(ValidationError)
 async def validation_exception_handler(request: Request, exc: ValidationError):
