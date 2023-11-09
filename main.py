@@ -26,6 +26,9 @@ fake_users = [
     {'id': 4, 'role':  "investor", 'name': 'Gomer', "degree":[
         {"id": 1, "created_at": "2020-01-01T00:00:00", "type_degree": "expert"} 
     ]},
+    {'id': 5, 'role':  "investor", 'name': 'Anton', "degree":[
+        {"id": 2, "created_at": "2020-01-07T00:00:00", "type_degree": "newbie"} 
+    ]},
 ]
 
 class Trade(BaseModel):
