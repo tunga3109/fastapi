@@ -1,6 +1,17 @@
-fake_trades = [
-    {"id": 1, "user_id": 1, "currency": "USD", "side": "buy", "price": 123, "amount": 2.12},
-    {"id": 2, "user_id": 2, "currency": "USD", "side": "sell", "price": 125, "amount": 2.12}
-]
+from capitalcom.client_demo import Client 
+from config import login, password, API_KEY
 
-print(fake_trades[1:][:1])
+
+cl = Client(
+    login,
+    password,
+    API_KEY
+)
+
+status = cl.historical_prices(
+    'BTCUSD'
+)
+
+print(status)
+
+a = ''
