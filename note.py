@@ -1,5 +1,6 @@
-from capitalcom.client_demo import Client 
+from capitalcom.client_demo import *
 from config import login, password, API_KEY
+import json
 
 
 cl = Client(
@@ -12,6 +13,6 @@ status = cl.historical_prices(
     'BTCUSD'
 )
 
-print(status)
+prices = json.loads(status)
 
 a = ''
